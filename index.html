@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="reader">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Bounds</title>
+	<style>
+		html {
+			background: rgb(36,36,36);
+			color: #DADEDF;
+			font-family: Helvetica, sans-serif;
+			font-size: 10px;
+		}
+
+		.reader {
+			max-width: 600px;
+			padding: 20px;
+			margin: 0 auto;
+		}
+
+		.chapter-text {
+			font-size: 1.2rem;
+		}
+
+	</style>
+</head>
+<body>
+	<!-- body here -->
+	<div ng-controller="ReaderController as reader" class="reader">
+		<h1><em>{{reader.book.title}}</em></h1>
+		<h2>by {{reader.book.author}}</h2>
+		<div ng-controller="CurrentWordController as cwCtrl" ng-init="cwCtrl.setWords(reader.book.chapter)">
+			<form name="cwForm" ng-submit="cwCtrl.setCurrentWord(cwNum)">
+				<input type="number" ng-model="cwNum">
+				<button type="submit" name="button">Jump</button>
+			</form>
+			<button type="button" ng-click="cwCtrl.togglePlaying()">
+				{{cwCtrl.playing ? "Pause" : "Play"}}
+			</button>
+			<strong>{{cwCtrl.words[cwCtrl.currentWord]}}</strong>
+			<p>{{cwCtrl.currentWord}}</p>
+		</div>
+		<p class="chapter-text">{{reader.book.chapter}}</p>
+	</div>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+	<script type="text/javascript" src="frontend/reader.js"></script>
+</body>
+</html>
